@@ -4,7 +4,10 @@
 [alias]
 	st = status
 	lg = log
+	# 一行で表示する
 	lgo = log --oneline
+	# 特定のファイルのログを表示する
+	lgp = log -p
    	graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
     	# 上の省略形
     	gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
