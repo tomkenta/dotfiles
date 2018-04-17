@@ -29,6 +29,7 @@
 	ui = auto
 [core]
 	editor = vim
+	attributesfile = /Users/k.yokota/.gitattributes
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
