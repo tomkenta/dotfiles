@@ -33,3 +33,6 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+[diff "xlsx"]
+	binary = true
+	textconv = $GOPATH/bin/git-xlsx-textconv
