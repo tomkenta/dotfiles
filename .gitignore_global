@@ -1,0 +1,8 @@
+# Created by tomkenta
+# refer to https://www.gitignore.io
+
+### macOS ###
+# General
+.DS_Store
+
+# End of gitignore_global
