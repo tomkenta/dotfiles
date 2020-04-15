@@ -29,8 +29,8 @@
 	ui = auto
 [core]
 	editor = vim
-	attributesfile = .gitattributes
-	excludesfile = .gitignore_global
+	attributesfile = /Users/kenta.yokota/.gitattributes
+	excludesfile = /Users/kenta.yokota/.gitignore_global
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
