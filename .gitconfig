@@ -29,8 +29,8 @@
 	ui = auto
 [core]
 	editor = vim
-	attributesfile = /Users/kenta.yokota/.gitattributes
-	excludesfile = /Users/kenta.yokota/.gitignore_global
+	attributesfile = ~/.gitattributes
+	excludesfile = ~/.gitignore_global
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
@@ -38,3 +38,5 @@
 [diff "xlsx"]
 	binary = true
 	textconv = $GOPATH/bin/git-xlsx-textconv
+[ghq]
+	root = ~/work/src
