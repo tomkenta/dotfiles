@@ -25,6 +25,7 @@
 	difff = diff --word-diff
 	diffc = diff --cached
 	diffno = diff --name-only
+	ls-subtree = !"git log | grep git-subtree-dir |  awk '{ print $2}'"
 [color]
 	ui = auto
 [core]
