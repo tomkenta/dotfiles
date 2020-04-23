@@ -26,6 +26,7 @@
 	diffc = diff --cached
 	diffno = diff --name-only
 	ls-subtree = !"git log | grep git-subtree-dir |  awk '{ print $2}'"
+	remote-open = !"git remote -v | awk '{ print $2}' | peco | xargs open"
 [color]
 	ui = auto
 [core]
