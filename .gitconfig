@@ -8,6 +8,7 @@
 	lgo = log --oneline
 	# 特定のファイルのログを表示する
 	lgp = log -p
+	lg-show-author = log --pretty=full
    	graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
     	# 上の省略形
     	gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
@@ -25,7 +26,9 @@
 	difff = diff --word-diff
 	diffc = diff --cached
 	diffno = diff --name-only
-	ls-subtree = !"git log | grep git-subtree-dir |  awk '{ print $2}'"
+	merge-dry = merge --no-commit --no-ff
+	subtree-ls = !"git log | grep git-subtree-dir |  awk '{ print $2}'"
+	submoulde-ls = !"git config --file .gitmodules --get-regexp path | awk '{ print $2}'"
 	remote-open = !"git remote -v | awk '{ print $2}' | peco | xargs open"
 [color]
 	ui = auto
