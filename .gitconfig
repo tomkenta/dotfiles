@@ -30,6 +30,8 @@
 	subtree-ls = !"git log | grep git-subtree-dir |  awk '{ print $2}'"
 	submoulde-ls = !"git config --file .gitmodules --get-regexp path | awk '{ print $2}'"
 	remote-open = !"git remote -v | awk '{ print $2}' | peco | xargs open"
+	root = rev-parse --show-toplevel
+	root-cd = !"cd $(git rev-parse --show-toplevel)"
 [color]
 	ui = auto
 [core]
