@@ -34,6 +34,8 @@
 	remote-open = !"git remote -v | awk '{ print $2}' | peco | xargs open"
 	root = rev-parse --show-toplevel
 	root-cd = !"cd $(git rev-parse --show-toplevel)"
+	restores = restore --staged
+	restore-all = !"git sts | awk '{print $2}' | xargs git restore --staged "
 [color]
 	ui = auto
 [core]
@@ -49,3 +51,5 @@
 	textconv = $GOPATH/bin/git-xlsx-textconv
 [ghq]
 	root = ~/work/src
+[hub]
+	protocol = https
