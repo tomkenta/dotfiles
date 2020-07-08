@@ -9,6 +9,7 @@ alias g='cd (ghq root)/(ghq list | peco)'
 alias gh='hub browse (ghq list | peco | cut -d "/" -f 2,3)'
 alias clip='pbcopy'
 alias new_note='touch (date "+%Y%m%d").md'
+alias hpc='history | peco | clip'
 
 # PowerShell
 ## font
