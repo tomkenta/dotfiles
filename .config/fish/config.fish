@@ -11,6 +11,9 @@ alias clip='pbcopy'
 alias new_note='touch (date "+%Y%m%d").md'
 alias hpc='history | peco | clip'
 
+# envirionment value
+set -gx HOMEBREW_CASK_OPTS "--appdir=~/Applications"
+
 # PowerShell
 ## font
 set -g theme_powerline_fonts yes
