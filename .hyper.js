@@ -114,6 +114,9 @@ module.exports = {
     // set to `false` for no bell
     bell: 'SOUND',
 
+    // the maximum scroll lines;
+    scrollback: Number.MAX_SAFE_INTEGER,
+
     // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
     copyOnSelect: false,
 
@@ -186,7 +189,8 @@ module.exports = {
     "hyper-confirm",
     "hyperborder",
     "hyper-pane",
-    "hyper-broadcast"
+    "hyper-broadcast",
+    "hyper-savetext"
   ],
 
   // in development, you can create a directory under

@@ -1,5 +1,8 @@
 # my fish config file
 
+# initiall load on anyenv
+anyenv init - fish | source
+
 # alias
 alias d='docker'
 alias dc='docker-compose'
