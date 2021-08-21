@@ -1,5 +1,8 @@
 # my fish config file
 
+# initialize homebrew 
+/opt/homebrew/bin/brew shellenv | source
+
 # initiall load on anyenv
 anyenv init - fish | source
 
