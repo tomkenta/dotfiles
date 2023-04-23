@@ -179,18 +179,17 @@ module.exports = {
     "hyper-material-theme",
     "hyper-search",
     "hypercwd",
-    "hyperline",
     "hyper-statusline",
     "hyper-tab-icons",
     "hyperlinks",
     "hyperterm-tabs",
     "hyper-highlight-active-pane",
     "gitrocket",
-    "hyper-confirm",
     "hyperborder",
     "hyper-pane",
     "hyper-broadcast",
-    "hyper-savetext"
+    "hyper-savetext",
+    "hyperline"
   ],
 
   // in development, you can create a directory under

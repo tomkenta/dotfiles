@@ -13,9 +13,12 @@ alias gh='hub browse (ghq list | peco | cut -d "/" -f 2,3)'
 alias clip='pbcopy'
 alias new_note='touch (date "+%Y%m%d").md'
 alias hpc='history | peco | clip'
+alias k='kubectl'
 
 # envirionment value
+set -g PASSWORD (security find-generic-password -s "mypass" -w)
 set -gx HOMEBREW_CASK_OPTS "--appdir=~/Applications"
+set -g JIRA_API_TOKEN $PASSWORD
 
 # PowerShell
 ## font
@@ -50,4 +53,8 @@ set -g fish_prompt_pwd_dir_length 0
 # fish function (TODO)
 function cdh --description "cd and list"
    cd $argv[1] && ls -l
+end
+
+function mkdircd --description "mkdir and cd"
+   mkdir -p $argv[1] && cd $argv[1]
 end
