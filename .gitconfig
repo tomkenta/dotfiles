@@ -50,7 +50,6 @@
 	binary = true
 	textconv = $GOPATH/bin/git-xlsx-textconv
 [ghq]
-	root = ~/workspace
-	root = ~/work/src
+	root = ~/src
 [hub]
 	protocol = https
