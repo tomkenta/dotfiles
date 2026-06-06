@@ -1,1 +1,3 @@
 .vscode/extensions/
+# fisher は setup.sh がダウンロードする生成ファイルのため追跡しない
+.config/fish/functions/fisher.fish
