@@ -1,8 +1,10 @@
-# Created by tomkenta
 # refer to https://www.gitignore.io
 
 ### macOS ###
 # General
 .DS_Store
+
+### Claude Code ###
+**/.claude/settings.local.json
 
 # End of gitignore_global

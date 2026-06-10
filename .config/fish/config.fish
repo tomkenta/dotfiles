@@ -19,9 +19,7 @@ alias hpc='history | peco | clip'
 alias k='kubectl'
 
 # envirionment value
-set -g PASSWORD (security find-generic-password -s "mypass" -w)
 set -gx HOMEBREW_CASK_OPTS "--appdir=~/Applications"
-set -g JIRA_API_TOKEN $PASSWORD
 
 # PowerShell
 ## font
