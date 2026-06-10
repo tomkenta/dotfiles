@@ -8,6 +8,7 @@ DOTFILES="$HOME/src/github.com/tomkenta/dotfiles"
 
 for f in \
   .zprofile \
+  .zshrc \
   .bash_profile \
   .bashrc \
   .vimrc \
@@ -20,7 +21,8 @@ done
 
 # ~/.config は丸ごとリンクせず、このリポジトリで管理しているサブディレクトリのみリンク
 # (丸ごとリンクすると既存の他ツール設定を壊す)
-# 対象: dotfiles/.config/ 配下にあるディレクトリのみ = fish, karabiner
+# 対象: dotfiles/.config/ 配下にあるディレクトリのみ = fish, karabiner, ghostty
 mkdir -p ~/.config
 ln -sfn "$DOTFILES/.config/fish"      ~/.config/fish
 ln -sfn "$DOTFILES/.config/karabiner" ~/.config/karabiner
+ln -sfn "$DOTFILES/.config/ghostty"   ~/.config/ghostty
