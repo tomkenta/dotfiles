@@ -137,6 +137,12 @@ alias l='clear && ls -l'
 alias ll='ls -l'
 alias lla='ls -la'
 alias clip='pbcopy'
+
+# ---- ディレクトリ移動 (.. は AUTO_CD で効くが ... 以上はエイリアスが必要) ----
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 alias g='peco-ghq-cd'   # ghq + peco でリポジトリ選択 → cd
 # 注: かつて alias gh='ghq list -p | peco' を置いていたが、GitHub CLI の `gh` を
 #     潰してしまう (gh pr create 等が動かない) ため廃止。リポジトリ選択は g で足りる。
