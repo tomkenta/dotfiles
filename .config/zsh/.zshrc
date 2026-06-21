@@ -164,8 +164,7 @@ alias g='fzf-ghq-cd'   # ghq + fzf でリポジトリ選択 → cd
 # 注: かつて alias gh='ghq list -p | ...' を置いていたが、GitHub CLI の `gh` を
 #     潰してしまう (gh pr create 等が動かない) ため廃止。リポジトリ選択は g で足りる。
 alias new_note='touch "$(date +%Y%m%d).md"'
-# 履歴を fzf で選んでクリップボードへ (Ctrl-R は実行用、hpc はコピー用)
-alias hpc='print -rl -- "${(@k)history}" | fzf | clip'
+# (履歴検索は fzf の Ctrl-R に一本化。旧 hpc エイリアスは廃止)
 
 # ---- git (oh-my-zsh 準拠の命名。衝突回避のため status は gst 等) ----
 #   ※ `git st` 形式のサブコマンド別名は .config/git/config にも別途定義あり
