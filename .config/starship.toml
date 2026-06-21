@@ -1,0 +1,38 @@
+# starship プロンプト設定 — ミニマル1行スタイル
+#   表示: パス(リポジトリ基準で短縮) + git ブランチ + プロンプト記号(❯)
+#   非表示: 時刻 / コマンド実行時間 / git ステータス件数 / exit コード
+#   exit ステータスは ❯ の色 (成功=緑 / 失敗=赤) で表現する。
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# プロンプト前に空行を入れない (1行・すっきり)
+add_newline = false
+
+format = "$directory$git_branch$character"
+
+[directory]
+truncation_length = 3        # 末尾3階層まで表示
+truncate_to_repo = true      # リポジトリ root を基準に短縮 (例: dotfiles)
+truncation_symbol = ""       # 短縮時の "…/" 接頭辞は付けない (すっきり)
+style = "bold cyan"
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+style = "bold purple"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+# ミニマル方針: 情報系モジュールは明示的に無効化
+[git_status]
+disabled = true
+
+[cmd_duration]
+disabled = true
+
+[time]
+disabled = true
+
+[status]
+disabled = true

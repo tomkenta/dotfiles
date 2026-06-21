@@ -19,6 +19,25 @@ endif
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" ============================================================
+" XDG 準拠: home 直下に viminfo / swap / netrw 履歴を撒かない
+"   置き場所が無ければ vim 自身が作成する (mkdir)。
+" ============================================================
+let s:xdg_state = !empty($XDG_STATE_HOME) ? $XDG_STATE_HOME : expand('~/.local/state')
+let s:xdg_data  = !empty($XDG_DATA_HOME)  ? $XDG_DATA_HOME  : expand('~/.local/share')
+
+" viminfo (~/.viminfo → state/vim/viminfo)
+if !isdirectory(s:xdg_state . '/vim')      | call mkdir(s:xdg_state . '/vim', 'p', 0700)      | endif
+execute 'set viminfo+=n' . s:xdg_state . '/vim/viminfo'
+
+" スワップファイル (~/foo.swp → state/vim/swap/; // でフルパス採用し衝突回避)
+if !isdirectory(s:xdg_state . '/vim/swap') | call mkdir(s:xdg_state . '/vim/swap', 'p', 0700) | endif
+execute 'set directory^=' . s:xdg_state . '/vim/swap//'
+
+" netrw のディレクトリ閲覧履歴 (~/.vim/.netrwhist → data/vim/.netrwhist)
+if !isdirectory(s:xdg_data . '/vim')       | call mkdir(s:xdg_data . '/vim', 'p', 0700)       | endif
+let g:netrw_home = s:xdg_data . '/vim'
+
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 

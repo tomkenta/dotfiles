@@ -42,10 +42,21 @@
 	ui = auto
 [core]
 	editor = vim
-	attributesfile = ~/.gitattributes
-	excludesfile = ~/.gitignore_global
+	attributesfile = ~/.config/git/attributes
+	excludesfile = ~/.config/git/ignore
 	# 全 repo 共通の pre-commit / pre-push フック（gitleaks スキャン）
 	hooksPath = ~/.config/git/hooks
+	# diff/log のページャを delta に (install.sh が git-delta を導入する前提)
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true       # n / N で差分箇所をジャンプ
+	line-numbers = true
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	colorMoved = default
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
@@ -59,5 +70,5 @@
 	protocol = https
 [include]
 	# 各マシン固有の設定（identity 等）はここに分離。dotfiles の外・非追跡。
-	# 例) ~/.gitconfig.local に [user] name/email を記載（存在しなければ git は無視）。
-	path = ~/.gitconfig.local
+	# 例) ~/.config/git/config.local に [user] name/email を記載（無ければ git は無視）。
+	path = ~/.config/git/config.local
