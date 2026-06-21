@@ -137,8 +137,9 @@ alias l='clear && ls -l'
 alias ll='ls -l'
 alias lla='ls -la'
 alias clip='pbcopy'
-alias g='peco-ghq-cd'
-alias gh='ghq list -p | peco'
+alias g='peco-ghq-cd'   # ghq + peco でリポジトリ選択 → cd
+# 注: かつて alias gh='ghq list -p | peco' を置いていたが、GitHub CLI の `gh` を
+#     潰してしまう (gh pr create 等が動かない) ため廃止。リポジトリ選択は g で足りる。
 alias new_note='touch "$(date +%Y%m%d).md"'
 # 履歴を peco で選んでクリップボードへ
 alias hpc='print -rl -- "${(@k)history}" | tac | peco | clip'
