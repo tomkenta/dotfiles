@@ -35,7 +35,7 @@ fi
 # ============================================================
 # 履歴
 # ============================================================
-HISTFILE="$HOME/.zsh_history"
+HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
 setopt SHARE_HISTORY         # 複数セッション間で履歴を共有
@@ -71,11 +71,13 @@ if command -v brew >/dev/null 2>&1; then
 fi
 
 autoload -Uz compinit
-# .zcompdump が 24h より新しければ再構築をスキップして起動を高速化
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-  compinit
+# .zcompdump は ZDOTDIR 配下に置く (home 直下を汚さない)
+_zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+# 24h より新しければ再構築をスキップして起動を高速化
+if [[ -n "$_zcompdump"(#qN.mh+24) ]]; then
+  compinit -d "$_zcompdump"
 else
-  compinit -C
+  compinit -C -d "$_zcompdump"
 fi
 
 zstyle ':completion:*' menu select                          # 補完候補をメニュー選択
@@ -193,5 +195,6 @@ fi
 
 # ============================================================
 # 秘密情報 (ローカル専用・gitignore 済み)
+#   ZDOTDIR 配下 (~/.config/zsh/.zshrc.local) を読む
 # ============================================================
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+[ -f "${ZDOTDIR:-$HOME}/.zshrc.local" ] && source "${ZDOTDIR:-$HOME}/.zshrc.local"

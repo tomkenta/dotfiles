@@ -42,8 +42,8 @@
 	ui = auto
 [core]
 	editor = vim
-	attributesfile = ~/.gitattributes
-	excludesfile = ~/.gitignore_global
+	attributesfile = ~/.config/git/attributes
+	excludesfile = ~/.config/git/ignore
 	# 全 repo 共通の pre-commit / pre-push フック（gitleaks スキャン）
 	hooksPath = ~/.config/git/hooks
 [filter "lfs"]
@@ -59,5 +59,5 @@
 	protocol = https
 [include]
 	# 各マシン固有の設定（identity 等）はここに分離。dotfiles の外・非追跡。
-	# 例) ~/.gitconfig.local に [user] name/email を記載（存在しなければ git は無視）。
-	path = ~/.gitconfig.local
+	# 例) ~/.config/git/config.local に [user] name/email を記載（無ければ git は無視）。
+	path = ~/.config/git/config.local

@@ -6,22 +6,18 @@
 
 DOTFILES="$HOME/src/github.com/tomkenta/dotfiles"
 
+# home 直下に置くのは XDG 非対応ツール + zsh のブートストラップ (.zshenv) のみ。
+# zsh/git/tmux 本体の設定は XDG (~/.config/) 配下へ集約している。
 for f in \
-  .zprofile \
-  .zshrc \
+  .zshenv \
   .bash_profile \
   .bashrc \
-  .vimrc \
-  .tmux.conf \
-  .gitconfig \
-  .gitattributes \
-  .gitignore_global; do
+  .vimrc; do
   ln -sf "$DOTFILES/$f" ~/"$f"
 done
 
 # ~/.config は丸ごとリンクせず、このリポジトリで管理しているサブディレクトリのみリンク
 # (丸ごとリンクすると既存の他ツール設定を壊す)
-# 対象: dotfiles/.config/ 配下にあるディレクトリ = fish, karabiner, ghostty, git
 #
 # ガード: ~/.config 自体がシンボリックリンクだと、以降の `ln -sfn` がリンク先の
 # 内部に入れ子のリンクを作ってしまう (過去の wholesale-symlink 構成での事故)。
@@ -32,11 +28,29 @@ if [ -L ~/.config ]; then
   exit 1
 fi
 mkdir -p ~/.config
+
+# (a) 完全にリポジトリ管理のディレクトリ = 丸ごとリンク
 ln -sfn "$DOTFILES/.config/fish"      ~/.config/fish
 ln -sfn "$DOTFILES/.config/karabiner" ~/.config/karabiner
 ln -sfn "$DOTFILES/.config/ghostty"   ~/.config/ghostty
+
+# (b) マシン固有/秘密/状態ファイルが同居するディレクトリ (zsh/git/tmux) は
+#     「実ディレクトリ + 管理ファイルだけリンク」にして、
+#     履歴・config.local・.zshrc.local 等がリポジトリ内に混入しないようにする。
+#     ガード: 既存が丸ごとリンクなら実ディレクトリへ作り直す (旧構成からの移行)。
+for d in zsh git tmux; do
+  [ -L ~/.config/$d ] && rm ~/.config/$d
+  mkdir -p ~/.config/$d
+done
+ln -sf "$DOTFILES/.config/zsh/.zshrc"      ~/.config/zsh/.zshrc
+ln -sf "$DOTFILES/.config/zsh/.zprofile"   ~/.config/zsh/.zprofile
+ln -sf "$DOTFILES/.config/tmux/tmux.conf"  ~/.config/tmux/tmux.conf
+ln -sf "$DOTFILES/.config/git/config"      ~/.config/git/config
+ln -sf "$DOTFILES/.config/git/attributes"  ~/.config/git/attributes
+ln -sf "$DOTFILES/.config/git/ignore"      ~/.config/git/ignore
 # git hooks (.gitconfig の hooksPath = ~/.config/git/hooks が参照)
-ln -sfn "$DOTFILES/.config/git"       ~/.config/git
+ln -sfn "$DOTFILES/.config/git/hooks"      ~/.config/git/hooks
+
 # starship は単独ファイル (~/.config/starship.toml) を読むのでファイル単位でリンク
 ln -sf  "$DOTFILES/.config/starship.toml" ~/.config/starship.toml
 

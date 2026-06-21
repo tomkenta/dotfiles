@@ -2,8 +2,14 @@
 # fisher は setup.sh がダウンロードする生成ファイルのため追跡しない
 .config/fish/functions/fisher.fish
 
-# 秘密情報はローカル専用ファイルに退避（リポジトリには含めない）
+# 秘密情報・マシン固有設定・シェル状態はローカル専用ファイルに退避（リポジトリには含めない）
+# XDG 構成のため ~/.config/{zsh,git} は実ディレクトリだが、万一リポジトリ内に
+# 生成された場合の保険として明示的に無視する。
 .zshrc.local
+.config/zsh/.zshrc.local
+.config/zsh/.zsh_history
+.config/zsh/.zcompdump*
+.config/git/config.local
 
 # Claude Code がプロジェクトごとに生成するローカル設定（追跡しない）
 .claude/settings.local.json
