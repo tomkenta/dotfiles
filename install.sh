@@ -21,11 +21,22 @@ done
 
 # ~/.config は丸ごとリンクせず、このリポジトリで管理しているサブディレクトリのみリンク
 # (丸ごとリンクすると既存の他ツール設定を壊す)
-# 対象: dotfiles/.config/ 配下にあるディレクトリのみ = fish, karabiner, ghostty
+# 対象: dotfiles/.config/ 配下にあるディレクトリ = fish, karabiner, ghostty, git
+#
+# ガード: ~/.config 自体がシンボリックリンクだと、以降の `ln -sfn` がリンク先の
+# 内部に入れ子のリンクを作ってしまう (過去の wholesale-symlink 構成での事故)。
+# その場合は自動で壊さず中断し、手動対応を促す。
+if [ -L ~/.config ]; then
+  echo "ERROR: ~/.config がシンボリックリンクです ($(readlink ~/.config))。" >&2
+  echo "       実ディレクトリに変換してから再実行してください。" >&2
+  exit 1
+fi
 mkdir -p ~/.config
 ln -sfn "$DOTFILES/.config/fish"      ~/.config/fish
 ln -sfn "$DOTFILES/.config/karabiner" ~/.config/karabiner
 ln -sfn "$DOTFILES/.config/ghostty"   ~/.config/ghostty
+# git hooks (.gitconfig の hooksPath = ~/.config/git/hooks が参照)
+ln -sfn "$DOTFILES/.config/git"       ~/.config/git
 # starship は単独ファイル (~/.config/starship.toml) を読むのでファイル単位でリンク
 ln -sf  "$DOTFILES/.config/starship.toml" ~/.config/starship.toml
 
