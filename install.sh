@@ -26,6 +26,16 @@ mkdir -p ~/.config
 ln -sfn "$DOTFILES/.config/fish"      ~/.config/fish
 ln -sfn "$DOTFILES/.config/karabiner" ~/.config/karabiner
 ln -sfn "$DOTFILES/.config/ghostty"   ~/.config/ghostty
+# starship は単独ファイル (~/.config/starship.toml) を読むのでファイル単位でリンク
+ln -sf  "$DOTFILES/.config/starship.toml" ~/.config/starship.toml
+
+# zsh 環境を強化するツール (未導入なら brew で導入)。
+# いずれも .zshrc が存在チェックでガードしているため、未導入でも壊れない。
+if command -v brew >/dev/null 2>&1; then
+  for pkg in starship zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf; do
+    brew list "$pkg" >/dev/null 2>&1 || brew install "$pkg"
+  done
+fi
 
 # Claude Code の自作スクリプト（個別ファイルのみリンク。~/.claude はツール管理ディレクトリ）
 mkdir -p ~/.claude
