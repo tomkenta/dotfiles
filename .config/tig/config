@@ -1,0 +1,8 @@
+# ~/.config/tig/config — tig の設定。
+# このファイルが XDG 配下 ($XDG_CONFIG_HOME/tig/config) に存在すると、
+# tig は履歴を ~/.tig_history ではなく $XDG_DATA_HOME/tig/history に書く。
+
+# 表示
+set line-graphics = utf-8   # グラフを UTF-8 罫線で描画
+set tab-size = 4
+set ignore-case = smart-case
