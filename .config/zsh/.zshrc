@@ -144,6 +144,32 @@ alias new_note='touch "$(date +%Y%m%d).md"'
 # 履歴を peco で選んでクリップボードへ
 alias hpc='print -rl -- "${(@k)history}" | tac | peco | clip'
 
+# ---- git (oh-my-zsh 準拠の命名。衝突回避のため status は gst 等) ----
+#   ※ `git st` 形式のサブコマンド別名は .config/git/config にも別途定義あり
+alias gst='git status'
+alias gss='git status -s'              # 短縮表示
+alias ga='git add'
+alias gaa='git add -A'                 # 全変更をステージ
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gca='git commit --amend'
+alias gco='git checkout'
+alias gcb='git checkout -b'            # ブランチ作成して切替
+alias gsw='git switch'
+alias gb='git branch'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git log --oneline --graph --decorate'
+alias gla='git log --oneline --graph --decorate --all'
+alias gp='git push'
+alias gpf='git push --force-with-lease'  # 安全な強制 push
+alias gpl='git pull'
+alias gf='git fetch --prune'
+alias gm='git merge'
+alias grb='git rebase'
+alias gsta='git stash'
+alias gstp='git stash pop'
+
 # ============================================================
 # 関数 (旧 fish 設定から移植)
 # ============================================================
