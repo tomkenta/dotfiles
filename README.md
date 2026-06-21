@@ -37,9 +37,12 @@ zsh ブートストラップ (`~/.zshenv`) のみをリンクする。zsh / git 
 - `.config/zsh/.zprofile` — Apple Silicon の Homebrew (`/opt/homebrew`) に PATH を通す
 - `.config/zsh/.zshrc` — メインシェル。anyenv 初期化、履歴共有/補完メニュー/各種 setopt、
   ghq + peco のリポジトリ移動 (`C-g` / `g`)、エイリアス・関数 (`cdh` / `mkdircd` / `gi` 等)、
-  fzf・autosuggestions・syntax-highlighting・starship を存在チェック付きで読み込む
+  以下のツールを存在チェック付きで読み込む（未導入でも壊れない）:
+  starship / zsh-autosuggestions / zsh-syntax-highlighting / fzf / fzf-tab /
+  **zoxide** (`z`/`zi`) / **direnv** / モダン CLI (`eza`→`ll`/`lla`/`lt`, `bat`, `fd`)
 - `.config/starship.toml` — プロンプト。パス短縮＋ブランチ＋`❯` のミニマル1行
-- `.config/git/config` — git エイリアス各種、ghq root = `~/src`、identity は焼き付き防止
+- `.config/git/config` — git エイリアス各種、ghq root = `~/src`、identity は焼き付き防止、
+  diff ページャに **delta**（行番号・色付き）
 - `.config/tmux/tmux.conf` — prefix を C-q、ステータスバー、vim 風ペイン操作・コピーモード
 - `.config/fish/config.fish` — 旧 fish 設定（移行元・参考用に残置）
 - `.config/ghostty/config` — Ghostty ターミナルの設定

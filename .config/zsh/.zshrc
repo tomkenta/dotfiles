@@ -134,9 +134,18 @@ alias d='docker'
 alias dc='docker compose'
 alias k='kubectl'
 alias l='clear && ls -l'
-alias ll='ls -l'
-alias lla='ls -la'
 alias clip='pbcopy'
+
+# ---- モダン CLI (別名で追加。ls/cat/find は素のまま据え置き) ----
+if command -v eza >/dev/null 2>&1; then
+  alias ll='eza -l --git --icons --group-directories-first'
+  alias lla='eza -la --git --icons --group-directories-first'
+  alias lt='eza --tree --level=2 --icons'
+else
+  alias ll='ls -l'
+  alias lla='ls -la'
+fi
+command -v bat >/dev/null 2>&1 && export BAT_THEME="ansi"
 
 # ---- ディレクトリ移動 (.. は AUTO_CD で効くが ... 以上はエイリアスが必要) ----
 alias ..='cd ..'
@@ -190,6 +199,15 @@ gi() { curl -sL "https://www.toptal.com/developers/gitignore/api/$*"; }
 # fzf
 # ============================================================
 if command -v fzf >/dev/null 2>&1; then
+  export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border --info=inline"
+  if command -v fd >/dev/null 2>&1; then
+    # 検索バックエンドを fd に (.gitignore 尊重・高速・隠しファイルも対象)
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+  fi
+  command -v bat >/dev/null 2>&1 && \
+    export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
   if fzf --zsh >/dev/null 2>&1; then
     # fzf >= 0.48: キーバインド/補完を一括ロード
     source <(fzf --zsh)
@@ -202,6 +220,20 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 # ============================================================
+# プラグイン: fzf-tab (TAB 補完を fzf メニュー化)
+#   ※ compinit と fzf の後・autosuggestions/syntax-highlighting より前に読む
+#   ※ マシンローカル ($ZDOTDIR/plugins/fzf-tab、repo 外。install.sh が clone)
+# ============================================================
+_fzftab="${ZDOTDIR:-$HOME}/plugins/fzf-tab/fzf-tab.plugin.zsh"
+if [ -f "$_fzftab" ]; then
+  source "$_fzftab"
+  zstyle ':fzf-tab:*' fzf-flags --height=40%
+  # cd 補完時はディレクトリ中身をプレビュー (eza があれば色付き)
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview \
+    'eza -1 --color=always $realpath 2>/dev/null || ls -1 $realpath'
+fi
+
+# ============================================================
 # プラグイン: autosuggestions (履歴からグレーで先読み補完)
 # ============================================================
 if command -v brew >/dev/null 2>&1; then
@@ -209,6 +241,12 @@ if command -v brew >/dev/null 2>&1; then
   [ -f "$_autosuggest" ] && source "$_autosuggest"
   ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 fi
+
+# ============================================================
+# zoxide (z: frecency cd / zi: fzf 選択) + direnv (ディレクトリ毎 env)
+# ============================================================
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 # ============================================================
 # プロンプト: starship

@@ -46,6 +46,17 @@
 	excludesfile = ~/.config/git/ignore
 	# 全 repo 共通の pre-commit / pre-push フック（gitleaks スキャン）
 	hooksPath = ~/.config/git/hooks
+	# diff/log のページャを delta に (install.sh が git-delta を導入する前提)
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true       # n / N で差分箇所をジャンプ
+	line-numbers = true
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	colorMoved = default
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
