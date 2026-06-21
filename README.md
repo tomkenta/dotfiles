@@ -36,7 +36,7 @@ zsh ブートストラップ (`~/.zshenv`) のみをリンクする。zsh / git 
 ## 含まれる主な設定
 - `.config/zsh/.zprofile` — Apple Silicon の Homebrew (`/opt/homebrew`) に PATH を通す
 - `.config/zsh/.zshrc` — メインシェル。anyenv 初期化、履歴共有/補完メニュー/各種 setopt、
-  ghq + peco のリポジトリ移動 (`C-g` / `g`)、エイリアス・関数 (`cdh` / `mkdircd` / `gi` 等)、
+  ghq + fzf のリポジトリ移動 (`C-g` / `g`、プレビュー付)、エイリアス・関数 (`cdh` / `mkdircd` / `gi` 等)、
   以下のツールを存在チェック付きで読み込む（未導入でも壊れない）:
   starship / zsh-autosuggestions / zsh-syntax-highlighting / fzf / fzf-tab /
   **zoxide** (`z`/`zi`) / **direnv** / モダン CLI (`eza`→`ll`/`lla`/`lt`, `bat`, `fd`)

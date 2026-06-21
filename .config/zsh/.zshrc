@@ -20,10 +20,9 @@ export EDITOR="vim"
 # Homebrew Cask のインストール先 (旧 fish 設定から移植)
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
-# ghq / peco
+# ghq (絞り込みは fzf に一本化)
 export GHQ_ROOT="$HOME/src"
 export GHQ_EDITOR="code"
-export PECO_OPTIONS="--layout=bottom-up"
 
 # ============================================================
 # anyenv (rbenv / pyenv / nodenv 等)
@@ -103,28 +102,37 @@ bindkey '^P'   history-beginning-search-backward-end
 bindkey '^N'   history-beginning-search-forward-end
 
 # ============================================================
-# ghq + peco でリポジトリ移動
+# ghq + fzf でリポジトリ移動
 # ============================================================
-# C-g: 入力行を peco に渡してリポジトリを選び、その場で cd
-function peco-ghq() {
-  local selected_dir
-  selected_dir=$(ghq list -p | peco --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
+# リポジトリを fzf で選択 (右ペインに README / git log をプレビュー)
+_fzf_ghq_select() {
+  ghq list -p | fzf --query "$1" --preview '
+    d={}; if [ -f "$d/README.md" ]; then
+      (command -v bat >/dev/null 2>&1 && bat --color=always --style=plain "$d/README.md") \
+        || cat "$d/README.md"
+    else
+      git -C "$d" log --oneline --decorate --color=always -20 2>/dev/null || ls -la "$d"
+    fi'
+}
+
+# C-g: その場でリポジトリを選んで cd
+function fzf-ghq() {
+  local dir
+  dir=$(_fzf_ghq_select "$LBUFFER")
+  if [ -n "$dir" ]; then
+    BUFFER="cd ${dir}"
     zle accept-line
   fi
-  zle clear-screen
+  zle reset-prompt
 }
-zle -N peco-ghq
-bindkey '^g' peco-ghq
+zle -N fzf-ghq
+bindkey '^g' fzf-ghq
 
 # g: コマンドとして実行してリポジトリへ cd
-function peco-ghq-cd() {
-  local selected_dir
-  selected_dir=$(ghq list -p | peco)
-  if [ -n "$selected_dir" ]; then
-    cd "${selected_dir}"
-  fi
+function fzf-ghq-cd() {
+  local dir
+  dir=$(_fzf_ghq_select)
+  [ -n "$dir" ] && cd "$dir"
 }
 
 # ============================================================
@@ -152,12 +160,12 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-alias g='peco-ghq-cd'   # ghq + peco でリポジトリ選択 → cd
-# 注: かつて alias gh='ghq list -p | peco' を置いていたが、GitHub CLI の `gh` を
+alias g='fzf-ghq-cd'   # ghq + fzf でリポジトリ選択 → cd
+# 注: かつて alias gh='ghq list -p | ...' を置いていたが、GitHub CLI の `gh` を
 #     潰してしまう (gh pr create 等が動かない) ため廃止。リポジトリ選択は g で足りる。
 alias new_note='touch "$(date +%Y%m%d).md"'
-# 履歴を peco で選んでクリップボードへ
-alias hpc='print -rl -- "${(@k)history}" | tac | peco | clip'
+# 履歴を fzf で選んでクリップボードへ (Ctrl-R は実行用、hpc はコピー用)
+alias hpc='print -rl -- "${(@k)history}" | fzf | clip'
 
 # ---- git (oh-my-zsh 準拠の命名。衝突回避のため status は gst 等) ----
 #   ※ `git st` 形式のサブコマンド別名は .config/git/config にも別途定義あり
