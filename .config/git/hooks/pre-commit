@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# 全 repo 共通 pre-commit（gitleaks）。設定は $HOME/.gitleaks.toml（あれば）。
+command -v gitleaks >/dev/null 2>&1 || exit 0
+cfg="$HOME/.gitleaks.toml"
+args=(protect --staged --redact --no-banner)
+[ -f "$cfg" ] && args+=(--config "$cfg")
+gitleaks "${args[@]}" || {
+  echo "❌ gitleaks: 機密の可能性を検出。コミット中止。誤検知なら git commit --no-verify。" >&2
+  exit 1
+}

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# 全 repo 共通 pre-push（gitleaks）。push 対象の "新規" commit のみスキャン。
+command -v gitleaks >/dev/null 2>&1 || exit 0
+cfg="$HOME/.gitleaks.toml"; base=(detect --no-banner --redact)
+[ -f "$cfg" ] && base+=(--config "$cfg")
+z=0000000000000000000000000000000000000000; fail=0
+while read -r l_ref l_sha r_ref r_sha; do
+  [ "$l_sha" = "$z" ] && continue
+  if [ "$r_sha" = "$z" ]; then
+    opts=(--log-opts="$l_sha --not --remotes")   # 新規ブランチ: 既push分を除外し全履歴再スキャンを防ぐ
+  else
+    opts=(--log-opts="$r_sha..$l_sha")
+  fi
+  gitleaks "${base[@]}" "${opts[@]}" || fail=1
+done
+[ "$fail" -eq 0 ] || { echo "❌ gitleaks(pre-push): 機密の可能性を検出。push中止。誤検知なら git push --no-verify。" >&2; exit 1; }
