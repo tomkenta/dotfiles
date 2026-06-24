@@ -144,6 +144,15 @@ alias k='kubectl'
 alias l='clear && ls -l'
 alias clip='pbcopy'
 
+# ---- Claude Code ----
+alias c='claude'
+alias cc='claude --dangerously-skip-permissions'
+alias ccont='claude --continue'
+alias cop='claude --model claude-opus-4-8'
+alias cso='claude --model claude-sonnet-4-6'
+alias cha='claude --model claude-haiku-4-5-20251001'
+alias ask='claude -p'
+
 # ---- モダン CLI (別名で追加。ls/cat/find は素のまま据え置き) ----
 if command -v eza >/dev/null 2>&1; then
   alias ll='eza -l --git --icons --group-directories-first'
@@ -153,7 +162,18 @@ else
   alias ll='ls -l'
   alias lla='ls -la'
 fi
-command -v bat >/dev/null 2>&1 && export BAT_THEME="ansi"
+if command -v bat >/dev/null 2>&1; then
+  export BAT_THEME="ansi"
+  alias cat='bat'
+fi
+
+# ---- 生産性 ----
+alias reload='source ${ZDOTDIR}/.zshrc'
+alias md='mkdir -p'
+alias myip='ipconfig getifaddr en0'
+alias ports='lsof -i -P -n | grep LISTEN'
+alias pn='pnpm'
+alias nr='npm run'
 
 # ---- ディレクトリ移動 (.. は AUTO_CD で効くが ... 以上はエイリアスが必要) ----
 alias ..='cd ..'
@@ -201,6 +221,15 @@ cdh() { cd "$1" && ls -l; }
 mkdircd() { mkdir -p "$1" && cd "$1"; }
 # gitignore テンプレートを取得: `gi macos,node > .gitignore`
 gi() { curl -sL "https://www.toptal.com/developers/gitignore/api/$*"; }
+# staged diff から commit メッセージを生成: gclaude
+gclaude() {
+  git diff --staged | claude -p \
+    "Write a concise git commit message in imperative mood (subject max 50 chars). Output the message only."
+}
+# コマンド出力を claude に説明させる: explain <cmd> [args...]
+explain() {
+  "$@" | claude -p "Explain the output of: $*"
+}
 
 # ============================================================
 # fzf
