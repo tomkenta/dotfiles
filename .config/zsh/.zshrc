@@ -106,8 +106,8 @@ bindkey '^N'   history-beginning-search-forward-end
 # ============================================================
 # リポジトリを fzf で選択 (右ペインに README / git log をプレビュー)
 _fzf_ghq_select() {
-  ghq list -p | fzf --query "$1" --preview '
-    d={}; if [ -f "$d/README.md" ]; then
+  ghq list -p | sed "s|$HOME|~|" | fzf --query "$1" --preview '
+    d=$(echo {} | sed "s|~|'"$HOME"'|"); if [ -f "$d/README.md" ]; then
       (command -v bat >/dev/null 2>&1 && bat --color=always --style=plain "$d/README.md") \
         || cat "$d/README.md"
     else
@@ -120,7 +120,7 @@ function fzf-ghq() {
   local dir
   dir=$(_fzf_ghq_select "$LBUFFER")
   if [ -n "$dir" ]; then
-    BUFFER="cd ${dir}"
+    BUFFER="cd ${dir/#\~/$HOME}"
     zle accept-line
   fi
   zle reset-prompt
@@ -132,7 +132,7 @@ bindkey '^g' fzf-ghq
 function fzf-ghq-cd() {
   local dir
   dir=$(_fzf_ghq_select)
-  [ -n "$dir" ] && cd "$dir"
+  [ -n "$dir" ] && cd "${dir/#\~/$HOME}"
 }
 
 # ============================================================
