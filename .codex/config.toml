@@ -1,0 +1,4 @@
+[tui]
+# Show enough context in the Codex footer to avoid working on the wrong branch.
+status_line = ["model-with-reasoning", "context-remaining", "current-dir", "git-branch"]
+terminal_title = ["project", "git-branch", "status"]
