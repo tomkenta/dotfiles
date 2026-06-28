@@ -85,3 +85,7 @@ fi
 mkdir -p ~/.claude
 ln -sf "$DOTFILES/.claude/statusline.sh"         ~/.claude/statusline.sh
 ln -sf "$DOTFILES/.claude/statusline-command.sh" ~/.claude/statusline-command.sh
+
+# Codex は config.toml にローカル状態/MCP/trust 設定が混在するため丸ごとリンクしない。
+# 既存設定を残し、管理したい TUI status line だけをマージする。
+sh "$DOTFILES/.codex/apply-config.sh"

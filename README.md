@@ -21,6 +21,8 @@ zsh ブートストラップ (`~/.zshenv`) のみをリンクする。zsh / git 
 管理ファイルのみリンク」でセットアップする（履歴や `config.local` 等がリポジトリに混入しないため）。
 あわせて zsh 強化ツール（`starship` / `zsh-autosuggestions` / `zsh-syntax-highlighting` /
 `zsh-completions` / `fzf`）を brew で導入する（未導入でも `.zshrc` がガードしており壊れない）。
+Codex は `~/.codex/config.toml` にローカル状態が混在するため丸ごとリンクせず、`install.sh` が
+`[tui]` の status line だけをマージする。
 
 秘密情報（API キー等）はリポジトリに含めない。`.zshrc` から `~/.config/zsh/.zshrc.local`
 （gitignore 済み）を読み込む構成のため、鍵類はそちらに置く。
@@ -32,6 +34,7 @@ zsh ブートストラップ (`~/.zshenv`) のみをリンクする。zsh / git 
 - `~/.config/git/{config,attributes,ignore,hooks}` — git はネイティブで XDG を参照。
   identity 等マシン固有設定は `config.local`（非追跡）に分離
 - `~/.config/tmux/tmux.conf` — tmux はネイティブで XDG を参照
+- `~/.codex/config.toml` — Codex は既存設定を保持しつつ `[tui]` の status line だけを更新
 
 ## 含まれる主な設定
 - `.config/zsh/.zprofile` — Apple Silicon の Homebrew (`/opt/homebrew`) に PATH を通す
@@ -44,6 +47,8 @@ zsh ブートストラップ (`~/.zshenv`) のみをリンクする。zsh / git 
 - `.config/git/config` — git エイリアス各種、ghq root = `~/src`、identity は焼き付き防止、
   diff ページャに **delta**（行番号・色付き）
 - `.config/tmux/tmux.conf` — prefix を C-q、ステータスバー、vim 風ペイン操作・コピーモード
+- `.codex/config.toml` / `.codex/apply-config.sh` — Codex のフッターに model / context /
+  current dir / git branch を表示
 - `.config/fish/config.fish` — 旧 fish 設定（移行元・参考用に残置）
 - `.config/ghostty/config` — Ghostty ターミナルの設定
 - `.vimrc` / `.config/karabiner/` ほか
