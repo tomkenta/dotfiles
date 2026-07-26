@@ -153,6 +153,12 @@ alias cso='claude --model claude-sonnet-4-6'
 alias cha='claude --model claude-haiku-4-5-20251001'
 alias ask='claude -p'
 
+# ---- Codex ----
+alias x='codex'
+alias xx='codex --dangerously-bypass-approvals-and-sandbox'
+alias xcont='codex resume --last'
+alias xask='codex exec'
+
 # ---- モダン CLI (別名で追加。ls/cat/find は素のまま据え置き) ----
 if command -v eza >/dev/null 2>&1; then
   alias ll='eza -l --git --icons --group-directories-first'
