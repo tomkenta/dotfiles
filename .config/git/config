@@ -48,6 +48,7 @@
 	hooksPath = ~/.config/git/hooks
 	# diff/log のページャを delta に (install.sh が git-delta を導入する前提)
 	pager = delta
+	quotePath = false
 [interactive]
 	diffFilter = delta --color-only
 [delta]
