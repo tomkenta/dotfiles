@@ -22,7 +22,7 @@ function is_section(line) {
 
 function print_managed() {
   print "# Managed by tomkenta/dotfiles. Keep local Codex state, MCP, and plugin settings elsewhere in this file."
-  print "status_line = [\"model-with-reasoning\", \"context-remaining\", \"current-dir\", \"git-branch\"]"
+  print "status_line = [\"model-with-reasoning\", \"permissions\", \"approval-mode\", \"five-hour-limit\", \"weekly-limit\", \"context-remaining\", \"current-dir\", \"git-branch\"]"
   print "terminal_title = [\"project\", \"git-branch\", \"status\"]"
   wrote_managed = 1
 }
