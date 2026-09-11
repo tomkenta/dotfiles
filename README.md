@@ -22,7 +22,8 @@ zsh ブートストラップ (`~/.zshenv`) のみをリンクする。zsh / git 
 あわせて zsh 強化ツール（`starship` / `zsh-autosuggestions` / `zsh-syntax-highlighting` /
 `zsh-completions` / `fzf`）を brew で導入する（未導入でも `.zshrc` がガードしており壊れない）。
 Codex は `~/.codex/config.toml` にローカル状態が混在するため丸ごとリンクせず、`install.sh` が
-`[tui]` の status line だけをマージする。
+`[tui]` の status line だけをマージする。Claude Code の `~/.claude/CLAUDE.md` と Codex の
+`~/.codex/AGENTS.md` は、外部脳のルート指示をどの作業ディレクトリからでも参照できるようにする。
 
 秘密情報（API キー等）はリポジトリに含めない。`.zshrc` から `~/.config/zsh/.zshrc.local`
 （gitignore 済み）を読み込む構成のため、鍵類はそちらに置く。
@@ -49,6 +50,7 @@ Codex は `~/.codex/config.toml` にローカル状態が混在するため丸�
 - `.config/tmux/tmux.conf` — prefix を C-q、ステータスバー、vim 風ペイン操作・コピーモード
 - `.codex/config.toml` / `.codex/apply-config.sh` — Codex のフッターに model / context /
   current dir / git branch を表示
+- `.claude/CLAUDE.md` / `.codex/AGENTS.md` — 外部脳のルート指示を常に参照するグローバル設定
 - `.config/fish/config.fish` — 旧 fish 設定（移行元・参考用に残置）
 - `.config/ghostty/config` — Ghostty ターミナルの設定
 - `.vimrc` / `.config/karabiner/` ほか

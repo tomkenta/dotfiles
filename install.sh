@@ -83,9 +83,12 @@ fi
 
 # Claude Code の自作スクリプト（個別ファイルのみリンク。~/.claude はツール管理ディレクトリ）
 mkdir -p ~/.claude
+ln -sf "$DOTFILES/.claude/CLAUDE.md"              ~/.claude/CLAUDE.md
 ln -sf "$DOTFILES/.claude/statusline.sh"         ~/.claude/statusline.sh
 ln -sf "$DOTFILES/.claude/statusline-command.sh" ~/.claude/statusline-command.sh
 
 # Codex は config.toml にローカル状態/MCP/trust 設定が混在するため丸ごとリンクしない。
 # 既存設定を残し、管理したい TUI status line だけをマージする。
+mkdir -p ~/.codex
+ln -sf "$DOTFILES/.codex/AGENTS.md" ~/.codex/AGENTS.md
 sh "$DOTFILES/.codex/apply-config.sh"
