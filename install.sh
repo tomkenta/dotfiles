@@ -4,7 +4,20 @@
 #
 # 前提: このリポジトリは ghq root 配下 (~/src/github.com/tomkenta/dotfiles) にある。
 
-DOTFILES="$HOME/src/github.com/tomkenta/dotfiles"
+set -eu
+DOTFILES="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+PROFILE=client
+case "${1:-}" in
+  "") ;;
+  --server) PROFILE=server ;;
+  *) echo "Usage: $0 [--server] (settings only; no package installs)" >&2; exit 2 ;;
+esac
+
+# Check before changing any home files.
+if [ -L "$HOME/.config" ]; then
+  echo "ERROR: ~/.config is a symlink; convert it to a real directory first." >&2
+  exit 1
+fi
 
 # home 直下に置くのは XDG 非対応ツール + zsh のブートストラップ (.zshenv) のみ。
 # zsh/git/tmux 本体の設定は XDG (~/.config/) 配下へ集約している。
@@ -37,10 +50,12 @@ mkdir -p "$XDG_STATE_HOME/less" "$XDG_STATE_HOME/bash" \
          "$XDG_STATE_HOME/vim/swap" "$XDG_DATA_HOME/vim" "$XDG_DATA_HOME/tig"
 
 # (a) 完全にリポジトリ管理のディレクトリ = 丸ごとリンク
-ln -sfn "$DOTFILES/.config/fish"      ~/.config/fish
-ln -sfn "$DOTFILES/.config/karabiner" ~/.config/karabiner
-ln -sfn "$DOTFILES/.config/ghostty"   ~/.config/ghostty
-ln -sfn "$DOTFILES/.config/tig"       ~/.config/tig
+if [ "$PROFILE" = client ]; then
+  ln -sfn "$DOTFILES/.config/fish"      ~/.config/fish
+  ln -sfn "$DOTFILES/.config/karabiner" ~/.config/karabiner
+  ln -sfn "$DOTFILES/.config/ghostty"   ~/.config/ghostty
+  ln -sfn "$DOTFILES/.config/tig"       ~/.config/tig
+fi
 
 # (b) マシン固有/秘密/状態ファイルが同居するディレクトリ (zsh/git/tmux) は
 #     「実ディレクトリ + 管理ファイルだけリンク」にして、
@@ -62,24 +77,8 @@ ln -sfn "$DOTFILES/.config/git/hooks"      ~/.config/git/hooks
 # starship は単独ファイル (~/.config/starship.toml) を読むのでファイル単位でリンク
 ln -sf  "$DOTFILES/.config/starship.toml" ~/.config/starship.toml
 
-# zsh 環境を強化するツール (未導入なら brew で導入)。
-# いずれも .zshrc が存在チェックでガードしているため、未導入でも壊れない。
-# (zoxide=z, fd=fzf検索, eza=ls, bat=cat, git-delta=diff, direnv=env)
-if command -v brew >/dev/null 2>&1; then
-  for pkg in starship zsh-autosuggestions zsh-syntax-highlighting zsh-completions \
-             zoxide fd eza bat git-delta direnv; do
-    brew list "$pkg" >/dev/null 2>&1 || brew install "$pkg"
-  done
-  # fzf は fzf-tab / `fzf --zsh` のため最新へ (旧 0.27 系だと未対応)
-  if brew list fzf >/dev/null 2>&1; then brew upgrade fzf || true; else brew install fzf; fi
-fi
-
-# fzf-tab (TAB 補完の fzf 化)。brew 非提供のため git clone でマシンローカルに配置。
-# 置き場所は ZDOTDIR 配下 (repo 外)。.zshrc が存在チェックで読み込む。
-FZFTAB="$HOME/.config/zsh/plugins/fzf-tab"
-if [ ! -d "$FZFTAB/.git" ] && command -v git >/dev/null 2>&1; then
-  git clone --depth=1 https://github.com/Aloxaf/fzf-tab "$FZFTAB"
-fi
+# Packages are installed by mac-setting/Brewfile.common, not by this script.
+# An existing optional fzf-tab plugin is retained; no network access here.
 
 # Claude Code の自作スクリプト（個別ファイルのみリンク。~/.claude はツール管理ディレクトリ）
 mkdir -p ~/.claude

@@ -19,8 +19,10 @@ zsh ブートストラップ (`~/.zshenv`) のみをリンクする。zsh / git 
 `~/.config` は丸ごとリンクせず、完全管理ディレクトリ (`fish` / `karabiner` / `ghostty`) は
 丸ごと、マシン固有/秘密/状態ファイルが同居する `zsh` / `git` / `tmux` は「実ディレクトリ＋
 管理ファイルのみリンク」でセットアップする（履歴や `config.local` 等がリポジトリに混入しないため）。
-あわせて zsh 強化ツール（`starship` / `zsh-autosuggestions` / `zsh-syntax-highlighting` /
-`zsh-completions` / `fzf`）を brew で導入する（未導入でも `.zshrc` がガードしており壊れない）。
+`install.sh`は設定適用のみで、brew・git cloneなどのインストールを行わない。
+ツール導入は `mac-setting/Brewfile.common`で管理する（未導入でも `.zshrc` がガードする）。
+Mac miniでは `sh ./install.sh --server` を使い、共通設定だけ適用する。
+管理対象設定は置き換える。Claude/Codexの認証やブラウザ状態は同期せず保持する。
 Codex は `~/.codex/config.toml` にローカル状態が混在するため丸ごとリンクせず、`install.sh` が
 `[tui]` の status line だけをマージする。Claude Code の `~/.claude/CLAUDE.md` と Codex の
 `~/.codex/AGENTS.md` は、外部脳のルート指示をどの作業ディレクトリからでも参照できるようにする。
@@ -46,7 +48,7 @@ Codex は `~/.codex/config.toml` にローカル状態が混在するため丸�
   **zoxide** (`z`/`zi`) / **direnv** / モダン CLI (`eza`→`ll`/`lla`/`lt`, `bat`, `fd`)
 - `.config/starship.toml` — プロンプト。パス短縮＋ブランチ＋`❯` のミニマル1行
 - `.config/git/config` — git エイリアス各種、ghq root = `~/src`、identity は焼き付き防止、
-  diff ページャに **delta**（行番号・色付き）
+  diff ページャに **delta**（行番号・色付き。導入はmac-setting）
 - `.config/tmux/tmux.conf` — prefix を C-q、ステータスバー、vim 風ペイン操作・コピーモード
 - `.codex/config.toml` / `.codex/apply-config.sh` — Codex のフッターに model / context /
   current dir / git branch を表示
