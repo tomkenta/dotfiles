@@ -1,7 +1,7 @@
 # dotfiles
 
 普段の Mac 環境の dotfiles。通常は [mac-setting](https://github.com/tomkenta/mac-setting)
-の `setup.sh` が ansible 経由で自動取得・シンボリックリンクするため、単体での操作は不要。
+の `scripts/setup-workspace.sh` が取得・設定適用を行う。
 
 ## 手動でセットアップする場合
 
@@ -40,7 +40,7 @@ Codex は `~/.codex/config.toml` にローカル状態が混在するため丸�
 - `~/.codex/config.toml` — Codex は既存設定を保持しつつ `[tui]` の status line だけを更新
 
 ## 含まれる主な設定
-- `.config/zsh/.zprofile` — Apple Silicon の Homebrew (`/opt/homebrew`) に PATH を通す
+- `.config/zsh/.zprofile` — HomebrewとNode.js 24にPATHを通す（Apple Silicon / Intel）
 - `.config/zsh/.zshrc` — メインシェル。anyenv 初期化、履歴共有/補完メニュー/各種 setopt、
   ghq + fzf のリポジトリ移動 (`C-g` / `g`、プレビュー付)、エイリアス・関数 (`cdh` / `mkdircd` / `gi` 等)、
   以下のツールを存在チェック付きで読み込む（未導入でも壊れない）:
