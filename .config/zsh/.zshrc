@@ -240,7 +240,7 @@ explain() {
 # ============================================================
 # fzf
 # ============================================================
-if command -v fzf >/dev/null 2>&1; then
+if [[ -o zle ]] && command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border --info=inline"
   if command -v fd >/dev/null 2>&1; then
     # 検索バックエンドを fd に (.gitignore 尊重・高速・隠しファイルも対象)
@@ -264,7 +264,7 @@ fi
 # ============================================================
 # プラグイン: fzf-tab (TAB 補完を fzf メニュー化)
 #   ※ compinit と fzf の後・autosuggestions/syntax-highlighting より前に読む
-#   ※ マシンローカル ($ZDOTDIR/plugins/fzf-tab、repo 外。install.sh が clone)
+#   ※ マシンローカル ($ZDOTDIR/plugins/fzf-tab、repo 外。存在するときだけ利用)
 # ============================================================
 _fzftab="${ZDOTDIR:-$HOME}/plugins/fzf-tab/fzf-tab.plugin.zsh"
 if [ -f "$_fzftab" ]; then
