@@ -190,7 +190,6 @@ alias g='fzf-ghq-cd'   # ghq + fzf でリポジトリ選択 → cd
 # 注: かつて alias gh='ghq list -p | ...' を置いていたが、GitHub CLI の `gh` を
 #     潰してしまう (gh pr create 等が動かない) ため廃止。リポジトリ選択は g で足りる。
 alias new_note='touch "$(date +%Y%m%d).md"'
-# (履歴検索は fzf の Ctrl-R に一本化。旧 hpc エイリアスは廃止)
 
 # ---- git (oh-my-zsh 準拠の命名。衝突回避のため status は gst 等) ----
 #   ※ `git st` 形式のサブコマンド別名は .config/git/config にも別途定義あり
@@ -225,6 +224,12 @@ alias gstp='git stash pop'
 cdh() { cd "$1" && ls -l; }
 # mkdir -p してそこへ cd
 mkdircd() { mkdir -p "$1" && cd "$1"; }
+# 履歴を新しい順に fzf で選んでコピー: hfc (キャンセル時はクリップボードを保持)
+hfc() {
+  local selected
+  selected=$(fc -lnr 1 | fzf --no-sort) || return
+  printf '%s' "$selected" | pbcopy
+}
 # gitignore テンプレートを取得: `gi macos,node > .gitignore`
 gi() { curl -sL "https://www.toptal.com/developers/gitignore/api/$*"; }
 # staged diff から commit メッセージを生成: gclaude
